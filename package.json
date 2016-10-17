@@ -1,15 +1,21 @@
 {
-  "name": "easy-git-npm-tools",
+  "name": "os-env-setter",
   "version": "0.0.1",
-  "description": "This is a tool that config git & npm tools, shorting git command, and configuring npm usage in China",
+  "description": "Setup os environment variables CROSS different platforms",
   "main": "index.js",
   "repository": {
     "url": "https://github.com/adventure-yunfei/easy-git-npm-tools.git",
     "type": "git"
   },
   "scripts": {
-    "build": "babel --presets es2015 src/ -d lib/"
+    "build": "babel --presets es2015 src/ -d lib/",
+    "prepublish": "npm run build"
   },
+  "files": [
+    "lib/",
+    "src/"
+  ],
+  "main": "lib/index.js",
   "author": "yunfei",
   "license": "MIT",
   "dependencies": {
