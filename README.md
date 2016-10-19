@@ -20,6 +20,6 @@ osEnvSetter({
 - on `Linux`, write env to `~/.bashrc`
 - on `Windows`, call `setx` to set global env (**Not tested yet!**)
 
-For `Linux`, you should be ware of defference between **login and not-login shell`. 
+For `Linux`, you should be ware of defference between **login and not-login shell**. 
 
 (If you don't, just add a line `source .bashrc;` to `~/.bash_profile` on Linux. Some Linux OS already did this.)
