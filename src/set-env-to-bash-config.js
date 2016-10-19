@@ -32,7 +32,7 @@ function getExportConfig(configFileContent, key) {
     return result;
 }
 
-function setEnvToBashConfigFile(bashConfigFile, envs, {log = true}) {
+function setEnvToBashConfigFile(bashConfigFile, envs) {
     const writtenEnvs = [];
     const bashConfigContent = fse.readFileSync(bashConfigFile, 'utf8');
     return Promise.resolve().then(() => {
@@ -43,19 +43,19 @@ function setEnvToBashConfigFile(bashConfigFile, envs, {log = true}) {
             }
         })));
     }).then(() => {
-        if (writtenEnvs.length && log) {
-            logWrittenEnvs(writtenEnvs);
-        }
-        return writtenEnvs;
+        return {
+            writtenFile: bashConfigFile,
+            writtenEnvs: writtenEnvs
+        };
     });
 }
 
-export function setEnvToBashrc(envs, {log = true}) {
+export function setEnvToBashrc(envs) {
     const bashrcFile = path.resolve(os.homedir(), '.bashrc');
-    return setEnvToBashConfigFile(bashrcFile, envs, {log});
+    return setEnvToBashConfigFile(bashrcFile, envs);
 }
 
-export function setEnvToBashProfile(envs, {log = true}) {
+export function setEnvToBashProfile(envs) {
     const bashProfileFile = path.resolve(os.homedir(), '.bash_profile');
-    return setEnvToBashConfigFile(bashProfileFile, envs, {log});
+    return setEnvToBashConfigFile(bashProfileFile, envs);
 }

@@ -1,7 +1,7 @@
 import child_process from 'child_process';
 
 export function execCmd(cmd) {
-    cmd += ' &2>1';
+    cmd += ' 2>&1';
     return new Promise((resolve, reject) => {
         const cp = child_process.exec(cmd, function (err, stdout) {
             if (err) {
@@ -21,6 +21,9 @@ export function sequencePromises(promiseGenerators) {
     return result;
 }
 
-export function logWrittenEnvs(writtenEnvs) {
-    
+export function logWrittenEnvs(writtenFile, writtenEnvs) {
+    console.log(`# Write into # ${path.basename(writtenFile)} #:`);
+    writtenEnvs.forEach(({key, value}) => {
+        console.log(`  - ${key} = ${value}`);
+    });
 }

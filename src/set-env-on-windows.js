@@ -5,16 +5,16 @@ function hasSetx() {
     return execCmd('setx');
 }
 
-export default function setEnvOnWindows(envs, {log = true}) {
+export default function setEnvOnWindows(envs) {
     const writtenEnvs = _.map(envs, (val, key) => ({key: key, value: val}));
     return hasSetx().then(() => {
         return sequencePromises(_.map(writtenEnvs, ({key, value}) => () => {
             return execCmd(`setx ${key} ${value}`)
         }));
     }).then(() => {
-        if (writtenEnvs.length && log) {
-            logWrittenEnvs(writtenEnvs);
-        }
-        return writtenEnvs;
+        return {
+            writtenFile: bashConfigFile,
+            writtenEnvs: writtenEnvs
+        };
     });
 }

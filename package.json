@@ -18,7 +18,6 @@
   "author": "yunfei",
   "license": "MIT",
   "dependencies": {
-    "commander": "^2.9.0",
     "fs-extra": "^0.30.0",
     "lodash": "^4.16.4"
   },

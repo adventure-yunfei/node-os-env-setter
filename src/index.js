@@ -1,3 +1,4 @@
+import os from 'os';
 import process from 'process';
 import {setEnvToBashrc, setEnvToBashProfile} from './set-env-to-bash-config';
 import {setEnvOnWindows} from './set-env-on-windows';
@@ -12,14 +13,37 @@ function isLinux() {
     return /(freebsd)|(linux)|(sunos)/.test(process.platform);
 }
 
-export default function setOsEnv(envs/**@type Object*/, {log = true/** whether output process info */}) {
+module.exports = function setOsEnv(envs/**@type Object*/, outputLog = false/** whether output process info */) {
+    let promise;
     if (isMac()) {
-        return setEnvToBashProfile(envs, {log});
+        promise = setEnvToBashProfile(envs);
     } else if (isLinux()) {
-        return setEnvToBashrc(envs, {log});
+        promise = setEnvToBashrc(envs);
     } else if (isWin()) {
-        return setEnvOnWindows(envs, {log});
+        promise = setEnvOnWindows(envs);
     } else {
-        return Promise.reject('setOsEnv: Unknown os platform: ' + process.platform);
+        promise = Promise.reject('setOsEnv: Unknown os platform: ' + process.platform);
     }
+
+    return promise
+        .then(({writtenFile, writtenEnvs}) => {
+            if (outputLog) {
+                if (writtenEnvs.length) {
+                    console.log(`# os-env-setter # Write into # ${path.basename(writtenFile)} #:`);
+                    writtenEnvs.forEach(({key, value}) => {
+                        console.log(`  - ${key} = ${value}`);
+                    });
+                } else {
+                    console.log(`# os-env-setter # Env variables already set.`);
+                }
+                console.log('# os-env-setter # Success.');
+            }
+        })
+        .catch(err => {
+            if (outputLog) {
+                console.error('# os-env-setter # Failed:');
+                console.error(err);
+            }
+            return Promise.reject(err);
+        });
 }
