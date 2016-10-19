@@ -1,8 +1,8 @@
 {
   "name": "os-env-setter",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Setup os environment variables CROSS different platforms",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "url": "https://github.com/adventure-yunfei/easy-git-npm-tools.git",
     "type": "git"
@@ -15,7 +15,6 @@
     "lib/",
     "src/"
   ],
-  "main": "lib/index.js",
   "author": "yunfei",
   "license": "MIT",
   "dependencies": {
