@@ -1,6 +1,6 @@
 {
   "name": "os-env-setter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Setup os environment variables CROSS different platforms",
   "main": "lib/index.js",
   "repository": {
