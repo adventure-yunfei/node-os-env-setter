@@ -38,6 +38,7 @@ module.exports = function setOsEnv(envs/**@type Object*/, outputLog = false/** w
                 }
                 console.log('# os-env-setter # Success.');
             }
+            return {writtenFile, writtenEnvs};
         })
         .catch(err => {
             if (outputLog) {
