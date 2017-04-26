@@ -1,7 +1,8 @@
 import os from 'os';
 import process from 'process';
 import {setEnvToBashrc, setEnvToBashProfile} from './set-env-to-bash-config';
-import {setEnvOnWindows} from './set-env-on-windows';
+import setEnvOnWindows from './set-env-on-windows';
+import setEnvOnCurrentNoWinShell from './set-env-on-current-no-win-shell';
 
 function isMac() {
     return /darwin/.test(process.platform);
@@ -16,9 +17,11 @@ function isLinux() {
 module.exports = function setOsEnv(envs/**@type Object*/, outputLog = false/** whether output process info */) {
     let promise;
     if (isMac()) {
-        promise = setEnvToBashProfile(envs);
+        promise = setEnvOnCurrentNoWinShell(envs)
+            .then(() => setEnvToBashProfile(envs));
     } else if (isLinux()) {
-        promise = setEnvToBashrc(envs);
+        promise = setEnvOnCurrentNoWinShell(envs)
+            .then(() => setEnvToBashrc(envs));
     } else if (isWin()) {
         promise = setEnvOnWindows(envs);
     } else {

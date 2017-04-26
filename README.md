@@ -18,7 +18,7 @@ osEnvSetter({
 
 - on `MacOs`, write env to `~/.bash_profile`
 - on `Linux`, write env to `~/.bashrc`
-- on `Windows`, call `setx` to set global env (**Not tested yet!**)
+- on `Windows`, call `setx` to set global env
 
 For `Linux`, you should be ware of defference between **login and not-login shell**. 
 
